@@ -1,5 +1,5 @@
 # An omnichannel strategy development framework leveraging customer opinion divergence via large language models and explainable AI
-- This is the official repository of "[An omnichannel strategy development framework leveraging customer opinion divergence via large language models and explainable AI](https://doi.org/xxxx)".
+- This is the official repository of "An omnichannel strategy development framework leveraging customer opinion divergence via large language models and explainable AI".
 
 ## Framework
 ![Framework](assets/framework.png)
