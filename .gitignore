@@ -3,7 +3,3 @@
 __pycache__/
 *.pyc
 *.pyo
-**/resources/log/*.log
-resource/
-venv/
-.env
