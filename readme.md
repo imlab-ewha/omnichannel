@@ -1,44 +1,42 @@
-# Omnichannel
+# An omnichannel strategy development framework leveraging customer opinion divergence via large language models and explainable AI
+---
+This is the official repository of "An omnichannel strategy development framework leveraging customer opinion divergence via large language models and explainable AI".
 
-End-to-end pipeline for omnichannel strategy development from Korean product reviews.
+# Framework
+---
+![Framework](assets/framework.png)
 
-## Setup
+## Installation
+---
+Please follow the steps below to perform the installation：
 
-**1. Install dependencies** (run from `omnichannel/`)
+**1. Create virtual environment**
+```bash
+conda create -n omnichannel python=3.9
+conda activate omnichannel
+```
 
+**2. Install packages**
 ```bash
 pip install -r requirements.txt
 ```
 
-**2. Configure API key**
-
+**3. Configure API key**
 Create a `.env` file in the `omnichannel/` directory:
-
 ```
 OPENAI_API_KEY=sk-...
 ```
-
-**3. Place input file**
-
-```
-omnichannel/resource/1_preprocessing/example_review.csv
-```
-
-Required columns: `preprocessed_content`, `rating`, `channel` (online / offline)
-
 ---
 
 ## Quick Start
+`main.py` runs all 9 steps end-to-end in order. Each step reads from and writes to the `resource/` directory, so no arguments are needed. Final output: `resource/8_scenario/scenario_assignment.csv`
+
+If a step fails, the pipeline stops immediately and prints which step failed.
 
 ```bash
 cd omnichannel/
 python main.py
 ```
-
-`main.py` runs all 9 steps end-to-end in order. Each step reads from and writes to the `resource/` directory, so no arguments are needed. Final output: `resource/8_scenario/scenario_assignment.csv`
-
-If a step fails, the pipeline stops immediately and prints which step failed.
-
 ---
 
 ## Pipeline
