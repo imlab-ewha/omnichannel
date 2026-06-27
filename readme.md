@@ -35,7 +35,9 @@ cd omnichannel/
 python main.py
 ```
 
-Final output: `resource/8_scenario/scenario_assignment.csv`
+`main.py` runs all 9 steps end-to-end in order. Each step reads from and writes to the `resource/` directory, so no arguments are needed. Final output: `resource/8_scenario/scenario_assignment.csv`
+
+If a step fails, the pipeline stops immediately and prints which step failed.
 
 ---
 
@@ -67,8 +69,8 @@ Extracts aspect-opinion-sentiment triplets from Korean reviews using a fine-tune
 |---|---|---|
 | `--input` | `resource/1_preprocessing/example_review.csv` | Input review CSV |
 | `--output` | `resource/2_aspect_extraction/` | Output directory |
-| `--device` | `cpu` | `cuda` or `cpu` |
-| `--batch-size` | `32` | Inference batch size |
+| `--batch-size` | `50` | Inference batch size |
+| `--gpu-id` | `0` | CUDA device index |
 
 ---
 
@@ -83,10 +85,8 @@ Normalizes raw aspect expressions into standardized forms via the OpenAI Chat AP
 | `--input` | `resource/2_aspect_extraction/aspect_extraction.csv` | Input CSV |
 | `--output-dir` | `resource/3_aspect_normalization/` | Output directory |
 | `--model` | `gpt-4o-mini` | OpenAI model |
-| `--chunk-size` | `100` | Pairs per API call |
 | `--temperature` | `0.0` | Sampling temperature |
 | `--seed` | `42` | Random seed |
-| `--sleep-interval` | `3.0` | Seconds between API calls |
 
 ---
 
@@ -108,7 +108,7 @@ Selects the top-k most frequent normalized aspects.
 
 `code/aspect_contribution_pairs_mining/overall_satisfaction_score_calculation/sentiment_analysis.py`
 
-Classifies each review as positive / negative using a GRU model. Runs on CPU.
+Classifies each review as positive / negative using a GRU model.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -116,7 +116,6 @@ Classifies each review as positive / negative using a GRU model. Runs on CPU.
 | `--output-dir` | `resource/5_sentiment_analysis/` | Output directory |
 
 Requires `best_model.h5` and `tokenizer.pickle` in the same directory as the script.
-Train with `gru_train.py` if not available.
 
 ---
 
@@ -199,15 +198,3 @@ Assigns an omnichannel strategy scenario (S1–S4) to each aspect.
 | `--output-dir` | `resource/8_scenario/` | Output directory |
 | `--epsilon` | `0.001` | Min \|online − offline\| SHAP difference to assign a scenario |
 
----
-
-## GRU Training (optional)
-
-If `best_model.h5` is not available, train the sentiment model:
-
-```bash
-cd code/aspect_contribution_pairs_mining/overall_satisfaction_score_calculation/
-python gru_train.py
-```
-
-Requires a labeled training CSV. Saves `best_model.h5` and `tokenizer.pickle` to the same directory.

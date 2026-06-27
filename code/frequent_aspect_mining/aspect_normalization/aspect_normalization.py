@@ -15,7 +15,6 @@ Usage:
     python aspect_normalization.py [--input PATH] [--output-dir DIR]
                                    [--model MODEL] [--chunk-size N]
                                    [--temperature T] [--seed N]
-                                   [--sleep-interval S]
 """
 
 import argparse
@@ -132,12 +131,6 @@ def parse_args() -> argparse.Namespace:
         default=42,
         help="Random seed for reproducible outputs.",
     )
-    parser.add_argument(
-        "--sleep-interval",
-        type=float,
-        default=3.0,
-        help="Seconds to sleep between API calls.",
-    )
     return parser.parse_args()
 
 
@@ -198,7 +191,7 @@ def run(args: argparse.Namespace) -> None:
         except Exception as e:
             print(f"[Chunk {chunk_num}/{total_chunks}] Error: {e}")
 
-        time.sleep(args.sleep_interval)
+        time.sleep(3)
 
     df["normalized_aspect"] = df["aspect"].map(all_normalized)
     df.to_csv(output_csv_path, index=False, encoding="utf-8-sig")

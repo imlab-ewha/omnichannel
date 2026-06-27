@@ -5,8 +5,8 @@ Extracts Aspect-Opinion-Sentiment (AOS) triplets from Korean product reviews
 using a fine-tuned KcELECTRA-based model.
 
 Usage:
-    python aspect_extraction.py --input PATH --output PATH
-                                [--device cuda|cpu] [--batch-size N] [--gpu-id N]
+    python aspect_extraction.py [--input PATH] [--output PATH]
+                                [--batch-size N] [--gpu-id N]
 
 The input CSV must contain a 'preprocessed_content' column.
 """
@@ -58,13 +58,6 @@ def parse_args() -> argparse.Namespace:
         help="Output directory.",
     )
     parser.add_argument(
-        "--device",
-        type=str,
-        default="cuda",
-        choices=["cuda", "cpu"],
-        help="Inference device.",
-    )
-    parser.add_argument(
         "--batch-size",
         type=int,
         default=50,
@@ -74,7 +67,7 @@ def parse_args() -> argparse.Namespace:
         "--gpu-id",
         type=str,
         default="0",
-        help="CUDA_VISIBLE_DEVICES value when using --device cuda).",
+        help="CUDA device index (CUDA_VISIBLE_DEVICES).",
     )
     return parser.parse_args()
 
@@ -85,7 +78,7 @@ def run(args: argparse.Namespace) -> None:
     records = df.to_dict(orient="records")
 
     processor = ReviewProcessor(
-        device=args.device,
+        device="cuda",
         batch_size=args.batch_size,
         gpu_id=args.gpu_id,
     )
