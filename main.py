@@ -39,13 +39,13 @@ def parse_args() -> argparse.Namespace:
         "--input",
         type=Path,
         default=_SCRIPT_DIR / "resource" / "example_review.csv",
-        help="Input review CSV (default: resource/example_review.csv).",
+        help="Input review CSV.",
     )
     parser.add_argument(
         "--resource-dir",
         type=Path,
         default=_SCRIPT_DIR / "resource",
-        help="Base directory for intermediate and output files (default: resource/).",
+        help="Base directory for intermediate and output files.",
     )
     return parser.parse_args()
 
