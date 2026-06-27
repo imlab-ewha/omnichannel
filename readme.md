@@ -23,8 +23,8 @@ Both scripts automatically load this file via `python-dotenv`.
 ```bash
 cd omnichannel/code/
 
-python frequent_aspect_mining/aspect_normalization.py --input ...
-python strategy_development/aspect_type_determination.py --aspects ...
+python frequent_aspect_mining/aspect_normalization/aspect_normalization.py --input ...
+python strategy_development/aspect_type_determination/aspect_type_determination.py --aspects ...
 ```
 
 ---
@@ -50,26 +50,26 @@ Two files written to `--output-dir`, timestamped at runtime:
 
 | File | Description |
 |---|---|
-| `normalization_results_YYMMDD_HHMMSS.csv` | Input CSV with an added `normalized_aspect` column |
-| `normalization_results_YYMMDD_HHMMSS.json` | Flat mapping of `{raw_aspect: normalized_aspect}` |
+| `normalization_YYMMDD_HHMMSS.csv` | Input CSV with an added `normalized_aspect` column |
+| `normalization_YYMMDD_HHMMSS.json` | Flat mapping of `{raw_aspect: normalized_aspect}` |
 
 **Arguments**
 
-| Argument | Required | Description |
+| Argument | Default | Description |
 |---|---|---|
-| `--input` | Yes | Path to input CSV |
-| `--output-dir` | Yes | Directory for output files |
-| `--model` | Yes | OpenAI model (e.g., `gpt-4o-mini`) |
-| `--chunk-size` | No | Number of pairs per API call |
-| `--temperature` | No | Sampling temperature |
-| `--seed` | No | Random seed for reproducibility |
-| `--sleep-interval` | No | Seconds to wait between API calls |
+| `--input` | `resource/1_aspect_extraction/aspect_extraction.csv` | Path to input CSV |
+| `--output-dir` | `resource/2_aspect_normalization/` | Directory for output files |
+| `--model` | `gpt-4o-mini` | OpenAI model |
+| `--chunk-size` | `100` | Number of pairs per API call |
+| `--temperature` | `0.0` | Sampling temperature |
+| `--seed` | `42` | Random seed for reproducibility |
+| `--sleep-interval` | `3.0` | Seconds to wait between API calls |
 
 **Example**
 
 ```bash
 cd omnichannel/code/
-python frequent_aspect_mining/aspect_normalization.py \
+python frequent_aspect_mining/aspect_normalization/aspect_normalization.py \
   --input data/aspects.csv \
   --output-dir results/normalization \
   --model gpt-4o-mini \
@@ -115,8 +115,8 @@ A single CSV at the path specified by `--output`:
 
 ```bash
 cd omnichannel/code/
-python strategy_development/aspect_type_determination.py \
-  --aspects results/normalization/normalization_results_260101_120000.csv \
+python strategy_development/aspect_type_determination/aspect_type_determination.py \
+  --aspects results/normalization/normalization_260101_120000.csv \
   --output results/type_determination/aspect_types.csv \
   --model gpt-4o-mini \
   --temperature 0 \
