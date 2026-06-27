@@ -28,9 +28,11 @@ OPENAI_API_KEY=sk-...
 - Download the pre-trained model weights from [#](https://doi.org/xxxx) and place them in the `models/` directory.
 
 ## Quick Start
-- `main.py` runs all 9 steps end-to-end in order. Each step reads from and writes to the `resource/` directory, so no arguments are needed. Final output: `resource/8_scenario/scenario_assignment.csv`.
+- `main.py` runs all steps end-to-end in order.
+- Each step reads from and writes to the `resource/` directory, so no arguments are needed.
+- Final output: `resource/8_scenario/scenario_assignment.csv`.
 - If a step fails, the pipeline stops immediately and prints which step failed.
-- We provide a sample Korean review dataset for inference testing at `resource/1_preprocessing/example_review.csv`.
+- We provide a sample Korean review dataset for inference testing at `resource/example_review.csv`.
 
 ```bash
 cd omnichannel/
@@ -38,15 +40,14 @@ python main.py
 ```
 
 ## Scripts
-
 ### Step 1 — Aspect Extraction
 - `code/frequent_aspect_mining/aspect_extraction/aspect_extraction.py`
-- Extracts aspect-opinion-sentiment triplets from Korean reviews using a fine-tuned KcELECTRA model.
+- Extracts product aspects from Korean reviews using a fine-tuned KcELECTRA model.
 
 | Argument | Default | Description |
 |---|---|---|
-| `--input` | `resource/1_preprocessing/example_review.csv` | Input review CSV |
-| `--output` | `resource/2_aspect_extraction/` | Output directory |
+| `--input` | `resource/example_review.csv` | Input review CSV |
+| `--output` | `resource/1_aspect_extraction/` | Output directory |
 | `--batch-size` | `50` | Inference batch size |
 | `--gpu-id` | `0` | CUDA device index |
 
