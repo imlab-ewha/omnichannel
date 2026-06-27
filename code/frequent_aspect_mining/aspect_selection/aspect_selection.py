@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--top-k",
         type=int,
-        default=30,
+        default=10,
         help="Number of top aspects to select.",
     )
     return parser.parse_args()

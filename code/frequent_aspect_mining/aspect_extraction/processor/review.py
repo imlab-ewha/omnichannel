@@ -56,7 +56,7 @@ def _model_config(device: str) -> types.SimpleNamespace:
     """Return a SimpleNamespace with all parameters required by MultiInferBert."""
     return types.SimpleNamespace(
         model_dir        = str(_MODEL_DIR / "model.pt"),
-        bert_model_path  = "beomi/KcELECTRA-base-v2022",
+        bert_model_path  = str(_MODEL_DIR),
         max_sequence_len = _MAX_SEQ_LEN,
         bert_feature_dim = _BERT_FEAT_DIM,
         class_num        = _CLASS_NUM,

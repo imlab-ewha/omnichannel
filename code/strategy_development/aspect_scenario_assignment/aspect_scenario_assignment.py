@@ -37,7 +37,7 @@ _RESOURCE_DIR       = _SCRIPT_DIR.parents[2] / "resource"
 _DEFAULT_SHAP       = _RESOURCE_DIR / "5_aspect_contribution" / "shap.csv"
 _DEFAULT_TYPES      = _RESOURCE_DIR / "6_aspect_type" / "aspect_types.csv"
 _DEFAULT_OUTPUT_DIR = _RESOURCE_DIR / "7_scenario"
-_EPSILON            = 0.00001
+_EPSILON            = 0.0
 
 _SCENARIO_MAP = {
     ("search",     "online"):  "S1",

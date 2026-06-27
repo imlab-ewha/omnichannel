@@ -19,6 +19,7 @@ pip install -r requirements.txt
 ```
 
 **3. Configure API key**
+
 Create a `.env` file in the `omnichannel/` directory:
 ```
 OPENAI_API_KEY=your_openai_api_key_here
@@ -26,10 +27,9 @@ OPENAI_API_KEY=your_openai_api_key_here
 > **Note:** An OpenAI API key is required for aspect normalization (Step 2) and aspect type determination (Step 8). You can obtain one at [platform.openai.com](https://platform.openai.com).
 
 **4. Download model weights**
+
 Download `model.pt` from [imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction](https://huggingface.co/imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction) and place it at:
 `code/frequent_aspect_mining/aspect_extraction/models/model.pt`
-
-The base encoder ([beomi/KcELECTRA-base-v2022](https://huggingface.co/beomi/KcELECTRA-base-v2022)) will be downloaded automatically on first run.
 
 ## Quick Start
 - `main.py` runs all steps end-to-end in order.
@@ -58,9 +58,9 @@ python main.py
 
 ### Step 2 — Aspect Normalization
 
-`code/frequent_aspect_mining/aspect_normalization/aspect_normalization.py`
+- `code/frequent_aspect_mining/aspect_normalization/aspect_normalization.py`
 
-Normalizes raw aspect expressions into standardized forms via the OpenAI Chat API.
+- Normalizes raw aspect expressions into standardized forms via the OpenAI Chat API.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -74,22 +74,22 @@ Normalizes raw aspect expressions into standardized forms via the OpenAI Chat AP
 
 ### Step 3 — Aspect Selection
 
-`code/frequent_aspect_mining/aspect_selection/aspect_selection.py`
+- `code/frequent_aspect_mining/aspect_selection/aspect_selection.py`
 
-Selects the top-k most frequent normalized aspects.
+- Selects the top-k most frequent normalized aspects.
 
 | Argument | Default | Description |
 |---|---|---|
 | `--input` | `resource/3_aspect_normalization/` | Normalization output dir (picks latest CSV) |
 | `--output-dir` | `resource/4_aspect_selection/` | Output directory |
-| `--top-k` | `30` | Number of aspects to select |
+| `--top-k` | `10` | Number of aspects to select |
 
 
 ### Step 4 — Sentiment Analysis
 
-`code/aspect_contribution_pairs_mining/overall_satisfaction_score_calculation/sentiment_analysis.py`
+- `code/aspect_contribution_pairs_mining/overall_satisfaction_score_calculation/sentiment_analysis.py`
 
-Classifies each review as positive / negative using a GRU model.
+- Classifies each review as positive / negative using a GRU model.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -100,7 +100,7 @@ Classifies each review as positive / negative using a GRU model.
 
 `code/aspect_contribution_pairs_mining/overall_satisfaction_score_calculation/overall_satisfaction_score_combination.py`
 
-Combines star rating and sentiment probability into a continuous satisfaction score (Eq. 1).
+- Combines rating and sentiment probability into a overall satisfaction score (Eq. 1).
 
 | Argument | Default | Description |
 |---|---|---|
@@ -110,9 +110,9 @@ Combines star rating and sentiment probability into a continuous satisfaction sc
 
 ### Step 6 — Random Forest
 
-`code/aspect_contribution_pairs_mining/aspect_contribution_calculation/random_forest.py`
+- `code/aspect_contribution_pairs_mining/aspect_contribution_calculation/random_forest.py`
 
-Trains a Random Forest regressor per channel (online / offline) to predict overall satisfaction from binary aspect-presence features.
+- Trains a Random Forest regressor per channel (online / offline) to predict overall satisfaction from binary aspect-presence features.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -166,5 +166,5 @@ Assigns an omnichannel strategy scenario (S1–S4) to each aspect.
 | `--shap` | `resource/6_aspect_contribution/shap_results.csv` | SHAP results |
 | `--types` | `resource/7_aspect_type/aspect_types.csv` | Aspect type results |
 | `--output-dir` | `resource/8_scenario/` | Output directory |
-| `--epsilon` | `0.001` | Min \|online − offline\| SHAP difference to assign a scenario |
+| `--epsilon` | `0.0` | Min \|online − offline\| SHAP difference to assign a scenario |
 
