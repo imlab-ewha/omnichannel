@@ -9,6 +9,11 @@ from openai import OpenAI
 
 load_dotenv()
 
+_SCRIPT_DIR         = Path(__file__).resolve().parent
+_RESOURCE_DIR       = _SCRIPT_DIR.parents[2] / "resource"
+_DEFAULT_INPUT      = _RESOURCE_DIR / "1_aspect_extraction" / "aspect_extraction.csv"
+_DEFAULT_OUTPUT_DIR = _RESOURCE_DIR / "2_aspect_normalization"
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -59,7 +64,7 @@ Input:
 ("zinc", "I like that it contains zinc.")]
 
 Output:
-{"vanilla scent": "scent", "lemon scent": "scent", "moisturizing power": "moisturizing", "moisturizing": "moisturizing", "pad size": "size", "size": "size", "oily skin": "oily", "zinc": "n/a"}
+{"vanilla scent": "scent", "lemon scent": "scent", "moisturizing power": "moisturizing", "moisturizing": "moisturizing", "pad size": "size", "size": "size", "oily skin": "oily", "zinc": "n/a"}
 """
 
 # ---------------------------------------------------------------------------
@@ -73,19 +78,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input",
         type=Path,
-        required=True,
-        help="Input CSV file (must contain 'aspect' and 'sentence' columns).",
+        default=_DEFAULT_INPUT,
+        help="Input CSV file containing 'aspect' and 'sentence' columns (default: resource/1_aspect_extraction/aspect_extraction.csv).",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        required=True,
-        help="Directory where output CSV and JSON files will be written.",
+        default=_DEFAULT_OUTPUT_DIR,
+        help="Directory where output CSV and JSON files will be written (default: resource/2_aspect_normalization/).",
     )
     parser.add_argument(
         "--model",
         type=str,
-        required=True,
+        default='gpt-4o-mini',
         help="OpenAI chat model identifier (e.g. gpt-4o-mini).",
     )
     parser.add_argument(
@@ -119,11 +124,6 @@ def parse_args() -> argparse.Namespace:
 # Core logic
 # ---------------------------------------------------------------------------
 
-def load_aspects(path: Path) -> pd.DataFrame:
-    """Load (aspect, sentence) pairs from CSV."""
-    return pd.read_csv(path)
-
-
 def normalize_chunk(
     client: OpenAI,
     pairs: list[tuple[str, str]],
@@ -152,10 +152,10 @@ def run(args: argparse.Namespace) -> None:
 
     output_dir = args.output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_csv_path  = output_dir / f"normalization_results_{timestamp}.csv"
-    output_json_path = output_dir / f"normalization_results_{timestamp}.json"
+    output_csv_path  = output_dir / f"normalization_{timestamp}.csv"
+    output_json_path = output_dir / f"normalization_{timestamp}.json"
 
-    df = load_aspects(args.input.resolve())
+    df = pd.read_csv(args.input.resolve())
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     all_normalized: dict[str, str] = {}

@@ -8,6 +8,11 @@ from openai import OpenAI
 
 load_dotenv()
 
+_SCRIPT_DIR         = Path(__file__).resolve().parent
+_RESOURCE_DIR       = _SCRIPT_DIR.parents[2] / "resource"
+_DEFAULT_ASPECTS    = _RESOURCE_DIR / "3_aspect_selection" / "top_aspects.csv"
+_DEFAULT_OUTPUT     = _RESOURCE_DIR / "6_aspect_type" / "aspect_types.csv"
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -39,20 +44,20 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--aspects",
         type=Path,
-        required=True,
-        help="File containing aspects to determine. Accepts .csv (must have an 'aspect' column).",
+        default=_DEFAULT_ASPECTS,
+        help="CSV file with a 'normalized_aspect' column (default: resource/3_aspect_selection/top_aspects.csv).",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        required=True,
-        help="Output CSV file path.",
+        default=_DEFAULT_OUTPUT,
+        help="Output CSV file path (default: resource/6_aspect_type/aspect_types.csv).",
     )
     parser.add_argument(
         "--model",
         type=str,
-        required=True,
-        help="OpenAI chat model identifier (e.g. gpt-4o-mini).",
+        default="gpt-4o-mini",
+        help="OpenAI chat model identifier (default: gpt-4o-mini).",
     )
     parser.add_argument(
         "--temperature",
@@ -74,8 +79,7 @@ def parse_args() -> argparse.Namespace:
 # ---------------------------------------------------------------------------
 
 def load_aspects(path: Path) -> list[str]:
-    """Load aspects from a .csv file."""
-    return pd.read_csv(path)["aspect"].dropna().tolist()
+    return pd.read_csv(path)["normalized_aspect"].dropna().tolist()
 
 
 def determine_aspect(
@@ -86,7 +90,6 @@ def determine_aspect(
     temperature: float,
     seed: int,
 ) -> dict:
-    """Call the API to determine the type of a single aspect."""
     response = client.chat.completions.create(
         model=model,
         seed=seed,
