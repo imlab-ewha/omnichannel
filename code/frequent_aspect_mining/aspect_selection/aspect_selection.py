@@ -34,7 +34,6 @@ def parse_args() -> argparse.Namespace:
         default=_DEFAULT_INPUT,
         help=(
             "Normalization result CSV, or the directory containing it "
-            "(default: resource/2_aspect_normalization/). "
             "If a directory is given, the latest normalization_*.csv is used."
         ),
     )
@@ -42,13 +41,13 @@ def parse_args() -> argparse.Namespace:
         "--output-dir",
         type=Path,
         default=_DEFAULT_OUTPUT_DIR,
-        help="Directory where output files will be written (default: resource/3_aspect_selection/).",
+        help="Directory where output files will be written.",
     )
     parser.add_argument(
         "--top-k",
         type=int,
         default=30,
-        help="Number of top aspects to select (default: 30).",
+        help="Number of top aspects to select.",
     )
     return parser.parse_args()
 

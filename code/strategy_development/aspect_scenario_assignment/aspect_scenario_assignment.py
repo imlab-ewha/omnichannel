@@ -37,7 +37,7 @@ _RESOURCE_DIR       = _SCRIPT_DIR.parents[2] / "resource"
 _DEFAULT_SHAP       = _RESOURCE_DIR / "5_aspect_contribution" / "shap.csv"
 _DEFAULT_TYPES      = _RESOURCE_DIR / "6_aspect_type" / "aspect_types.csv"
 _DEFAULT_OUTPUT_DIR = _RESOURCE_DIR / "7_scenario"
-_EPSILON            = 0.001
+_EPSILON            = 0.0001
 
 _SCENARIO_MAP = {
     ("search",     "online"):  "S1",
@@ -52,13 +52,13 @@ def parse_args() -> argparse.Namespace:
         description="Assign omnichannel strategy scenarios (S1-S4) to aspects.",
     )
     parser.add_argument("--shap",       type=Path, default=_DEFAULT_SHAP,
-                        help="shap_results.csv (default: resource/5_aspect_contribution/shap_results.csv).")
+                        help="shap_results.csv.")
     parser.add_argument("--types",      type=Path, default=_DEFAULT_TYPES,
-                        help="aspect_types.csv (default: resource/6_aspect_type/aspect_types.csv).")
+                        help="aspect_types.csv.")
     parser.add_argument("--output-dir", type=Path, default=_DEFAULT_OUTPUT_DIR,
-                        help="Output directory (default: resource/7_scenario/).")
+                        help="Output directory.")
     parser.add_argument("--epsilon",    type=float, default=_EPSILON,
-                        help=f"Min |online_mean_shap - offline_mean_shap| to assign a scenario (default: {_EPSILON}).")
+                        help=f"Min |online_mean_shap - offline_mean_shap| to assign a scenario")
     return parser.parse_args()
 
 

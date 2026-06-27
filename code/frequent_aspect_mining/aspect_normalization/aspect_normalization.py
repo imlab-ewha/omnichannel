@@ -50,21 +50,21 @@ Given a list of (aspect, sentence) pairs, normalize each aspect as follows:
 Step 1 — Group aspects
 Group aspects if they meet either of the following:
 - Synonyms: Different expressions with the same meaning in the context of product reviews.
-  - Example: ["moisturizing feel", "moisturizing power", "moisturizing“]
+    - Example: ["촉촉함", "보습력", "보습감"]
 - Hierarchical: A specific aspect that belongs to a broader concept.
-  - Example: ["vanilla scent", "woody scent", "citrus“]
-  - A single aspect cannot form a hierarchical group on its own. Do not generalize an aspect in isolation.
+    - Example: ["바닐라 향", "우디 향", "시트러스 향"]
+    - A single aspect cannot form a hierarchical group on its own. Do not generalize an aspect in isolation.
 
 Step 2 — Select representative for each group
 - Synonym groups: Choose the most general and commonly used expression from within the group.
-  - Suffix removal is allowed: "moisturizing", "oiliness" → "oily", "oily skin" → "oily“
+    - Suffix removal is allowed: "쿨링감", "쿨링 효과" → "쿨링", "지성 피부" → "지성"
 - Hierarchical groups: Replace with the broader term. The broader term does not need to appear in the input.
 
 Step 3 — Handle ungrouped aspects
-If an aspect does not belong to any group, return "n/a".
+If an aspect does not belong to any group, **return "n/a"**.
 
 Avoid Over-Generalization
-- Do not use abstract meta-categories like "condition", "form", "effect", or "product" as normalized forms.
+- Do not use abstract meta-categories like "상태", "제형", "효과", or "제품" as normalized forms.
 
 Task input: A list of (aspect, sentence) pairs:
 [("aspect1", "sentence1"), ("aspect2", "sentence2"), ...]
@@ -74,17 +74,18 @@ Do not include explanations or additional text.
 
 Demonstrations:
 Input:
-[("vanilla scent", "The vanilla scent is so sweet and lovely."),
-("lemon scent", "The lemon scent lasts long, which I really like."),
-("moisturizing power", "The moisturizing power is satisfying."),
-("moisturizing", "The moisturizing effect was great, so I gave it as a gift to a friend."),
-("pad size", "I like it because the pad size is large."),
-("size", "I was disappointed because the size was smaller than expected."),
-("oily skin", "I have oily skin, so it gets shiny quickly."),
-("zinc", "I like that it contains zinc.")]
+[("바닐라 향", "바닐라 향이 너무 달콤하고 사랑스러워요."),
+("레몬 향", "레몬 향이 오래 지속되어서 정말 마음에 듭니다."),
+("보습력", "보습력이 아주 만족스럽습니다."),
+("촉촉함", "촉촉함이 너무 좋아서 친구에게도 선물했어요."),
+("패드 크기", "패드 크기가 큼직해서 아주 마음에 듭니다."),
+("사이즈", "생각했던 것보다 사이즈가 작아서 조금 아쉬웠어요."),
+("지성 피부", "제가 지성 피부라서 유분기가 금방 올라와요."),
+("지성인", "제가 지성인이어서 이 패드가 잘 맞네요."),
+("아연", "아연 성분이 함유되어 있어서 좋습니다.")]
 
 Output:
-{"vanilla scent": "scent", "lemon scent": "scent", "moisturizing power": "moisturizing", "moisturizing": "moisturizing", "pad size": "size", "size": "size", "oily skin": "oily", "zinc": "n/a"}
+{"바닐라 향": "향", "레몬 향": "향", "보습력": "보습", "촉촉함": "보습", "패드 크기": "사이즈", "사이즈": "사이즈", "지성 피부": "지성", "지성인": "지성", "아연": "n/a"}
 """
 
 # ---------------------------------------------------------------------------
@@ -99,19 +100,19 @@ def parse_args() -> argparse.Namespace:
         "--input",
         type=Path,
         default=_DEFAULT_INPUT,
-        help="Input CSV file containing 'aspect' and 'sentence' columns (default: resource/1_aspect_extraction/aspect_extraction.csv).",
+        help="Input CSV file containing 'aspect' and 'sentence' columns.",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
         default=_DEFAULT_OUTPUT_DIR,
-        help="Directory where output CSV and JSON files will be written (default: resource/2_aspect_normalization/).",
+        help="Directory where output CSV and JSON files will be written.",
     )
     parser.add_argument(
         "--model",
         type=str,
         default='gpt-4o-mini',
-        help="OpenAI chat model identifier (e.g. gpt-4o-mini).",
+        help="OpenAI chat model identifier.",
     )
     parser.add_argument(
         "--chunk-size",

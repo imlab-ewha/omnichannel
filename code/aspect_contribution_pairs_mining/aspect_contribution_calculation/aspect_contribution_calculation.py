@@ -37,9 +37,9 @@ def parse_args() -> argparse.Namespace:
         description="Compute per-channel SHAP values from trained Random Forest models.",
     )
     parser.add_argument("--model-dir",  type=Path, default=_DEFAULT_MODEL_DIR,
-                        help="Directory containing {channel}_rf.pkl files (default: resource/5_aspect_contribution/models/).")
+                        help="Directory containing {channel}_rf.pkl files.")
     parser.add_argument("--output-dir", type=Path, default=_DEFAULT_OUTPUT_DIR,
-                        help="Directory where shap.csv will be written (default: resource/5_aspect_contribution/).")
+                        help="Directory where shap.csv will be written.")
     return parser.parse_args()
 
 

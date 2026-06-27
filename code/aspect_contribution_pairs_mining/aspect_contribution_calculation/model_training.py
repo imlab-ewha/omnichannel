@@ -40,21 +40,21 @@ def parse_args() -> argparse.Namespace:
         description="Train a Random Forest per channel for aspect contribution analysis.",
     )
     parser.add_argument("--satisfaction",    type=Path, default=_DEFAULT_SATISFACTION,
-                        help="overall_satisfaction.csv (default: resource/4_sentiment_analysis/overall_satisfaction.csv).")
+                        help="overall_satisfaction.csv.")
     parser.add_argument("--top-aspects",     type=Path, default=_DEFAULT_TOP_ASPECTS,
-                        help="top_aspects.csv (default: resource/3_aspect_selection/top_aspects.csv).")
+                        help="top_aspects.csv.")
     parser.add_argument("--reviews",         type=Path, default=_DEFAULT_REVIEWS,
-                        help="top_aspect_reviews.csv (default: resource/3_aspect_selection/top_aspect_reviews.csv).")
+                        help="top_aspect_reviews.csv.")
     parser.add_argument("--output-dir",      type=Path, default=_DEFAULT_OUTPUT_DIR,
-                        help="Output directory (default: resource/5_aspect_contribution/).")
+                        help="Output directory.")
     parser.add_argument("--n-estimators",    type=int,  default=300,
-                        help="Number of trees in the forest (default: 300).")
+                        help="Number of trees in the forest.")
     parser.add_argument("--max-depth",       type=int,  default=8,
-                        help="Maximum depth of each tree (default: 8).")
+                        help="Maximum depth of each tree.")
     parser.add_argument("--min-samples-leaf",type=int,  default=5,
-                        help="Minimum samples required at a leaf node (default: 5).")
+                        help="Minimum samples required at a leaf node.")
     parser.add_argument("--random-state",    type=int,  default=42,
-                        help="Random seed for reproducibility (default: 42).")
+                        help="Random seed for reproducibility.")
     return parser.parse_args()
 
 

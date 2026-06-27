@@ -64,19 +64,19 @@ def parse_args() -> argparse.Namespace:
         "--aspects",
         type=Path,
         default=_DEFAULT_ASPECTS,
-        help="CSV file with a 'normalized_aspect' column (default: resource/3_aspect_selection/top_aspects.csv).",
+        help="CSV file with a 'normalized_aspect' column.",
     )
     parser.add_argument(
         "--output",
         type=Path,
         default=_DEFAULT_OUTPUT,
-        help="Output CSV file path (default: resource/6_aspect_type/aspect_types.csv).",
+        help="Output CSV file path.",
     )
     parser.add_argument(
         "--model",
         type=str,
         default="gpt-4o-mini",
-        help="OpenAI chat model identifier (default: gpt-4o-mini).",
+        help="OpenAI chat model identifier.",
     )
     parser.add_argument(
         "--temperature",

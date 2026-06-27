@@ -38,13 +38,13 @@ def parse_args() -> argparse.Namespace:
         "--input",
         type=Path,
         default=_DEFAULT_INPUT,
-        help="Input CSV with 'rating', 'sentiment', and 'positivity_probability' columns (default: resource/4_sentiment_analysis/sentiment_analysis.csv).",
+        help="Input CSV with 'rating', 'sentiment', and 'positivity_probability' columns.",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
         default=_DEFAULT_OUTPUT_DIR,
-        help="Directory where the output CSV will be written (default: resource/4_sentiment_analysis/).",
+        help="Directory where the output CSV will be written.",
     )
     return parser.parse_args()
 

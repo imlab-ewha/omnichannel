@@ -45,13 +45,13 @@ def parse_args() -> argparse.Namespace:
         "--input",
         type=Path,
         default=_DEFAULT_INPUT,
-        help="Input CSV containing a 'preprocessed_content' column (default: resource/example_review.csv).",
+        help="Input CSV containing a 'preprocessed_content' column.",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
         default=_DEFAULT_OUTPUT_DIR,
-        help="Directory where the output CSV will be written (default: resource/4_sentiment_analysis/).",
+        help="Directory where the output CSV will be written.",
     )
     return parser.parse_args()
 

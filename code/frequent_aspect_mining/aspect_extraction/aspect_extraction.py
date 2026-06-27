@@ -49,13 +49,13 @@ def parse_args() -> argparse.Namespace:
         "--input",
         type=Path,
         default=_DEFAULT_INPUT,
-        help="Input CSV file containing a 'preprocessed_content' column (default: resource/example_review.csv).",
+        help="Input CSV file containing a 'preprocessed_content' column.",
     )
     parser.add_argument(
         "--output",
         type=Path,
         default=_DEFAULT_OUTPUT_DIR,
-        help="Output directory (default: omnichannel/resource/1_aspect_extraction/).",
+        help="Output directory.",
     )
     parser.add_argument(
         "--device",
@@ -68,13 +68,13 @@ def parse_args() -> argparse.Namespace:
         "--batch-size",
         type=int,
         default=50,
-        help="Number of sentences per model forward pass (default: 50).",
+        help="Number of sentences per model forward pass.",
     )
     parser.add_argument(
         "--gpu-id",
         type=str,
         default="0",
-        help="CUDA_VISIBLE_DEVICES value when using --device cuda (default: 0).",
+        help="CUDA_VISIBLE_DEVICES value when using --device cuda).",
     )
     return parser.parse_args()
 
