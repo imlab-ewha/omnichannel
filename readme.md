@@ -202,8 +202,6 @@ python main_fine-tuning.py --model kc_electra [--train_data PATH] [--dev_data PA
 
 Output: `checkpoints/kc_electra/model_kc_electra_<timestamp>.pt`
 
---
-
 ### Sentiment Analysis — GRU training (`src/sentiment_analysis.py`)
 
 **Data format** — tab-separated, no header:
