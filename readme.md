@@ -140,7 +140,7 @@ Output columns: `aspect`, `online_mean_abs_shap`, `online_mean_shap`, `offline_m
 | `--temperature` | `0.0` | Sampling temperature |
 | `--seed` | `42` | Random seed |
 
-### Step 9 — Scenario Assignment
+### Step 9 — Strategy Scenario Assignment
 
 - `code/strategy_development/aspect_scenario_assignment/aspect_scenario_assignment.py`
 - Assigns an omnichannel strategy scenario (S1–S4) to each aspect.
