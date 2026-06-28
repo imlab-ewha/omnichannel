@@ -31,8 +31,8 @@ _SCRIPT_DIR         = Path(__file__).resolve().parent
 _RESOURCE_DIR       = _SCRIPT_DIR.parents[2] / "resource"
 _DEFAULT_INPUT      = _RESOURCE_DIR / "example_review.csv"
 _DEFAULT_OUTPUT_DIR = _RESOURCE_DIR / "4_sentiment_analysis"
-_MODEL_PATH         = _SCRIPT_DIR / "best_model.h5"
-_TOKENIZER_PATH     = _SCRIPT_DIR / "tokenizer.pickle"
+_MODEL_PATH     = _SCRIPT_DIR / "models" / "model.h5"
+_TOKENIZER_PATH = _SCRIPT_DIR / "models" / "tokenizer.pkl"
 
 _MAX_LEN = 80
 
@@ -56,9 +56,21 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+# def _predict(text: str, model, tokenizer, mecab: MeCab) -> tuple[str, float]:
+#     text = re.sub(r"[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", str(text))
+#     tokens = [token.surface for token in mecab.parse(text)]
+#     encoded = tokenizer.texts_to_sequences([tokens])
+#     padded = pad_sequences(encoded, maxlen=_MAX_LEN)
+#     score = round(float(model.predict(padded, verbose=0)), 4)
+#     sentiment = "positive" if score > 0.5 else "negative"
+#     return sentiment, score
+
+_STOPWORDS = ['도','는','다','의','가','이','은','한','에','하','고','을','를','인','듯','과','와','네','들','듯','지','임','게']
+
 def _predict(text: str, model, tokenizer, mecab: MeCab) -> tuple[str, float]:
     text = re.sub(r"[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", str(text))
     tokens = [token.surface for token in mecab.parse(text)]
+    tokens = [t for t in tokens if t not in _STOPWORDS]  # 추가!
     encoded = tokenizer.texts_to_sequences([tokens])
     padded = pad_sequences(encoded, maxlen=_MAX_LEN)
     score = round(float(model.predict(padded, verbose=0)), 4)

@@ -96,7 +96,7 @@ python main.py
 ### Step 5 — Overall Satisfaction Score Combination
 
 - `code/aspect_contribution_pairs_mining/overall_satisfaction_score_combination/overall_satisfaction_score_combination.py`
-- Combines rating and sentiment probability into a overall satisfaction score.
+- Combines rating and sentiment probability into an overall satisfaction score.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -106,7 +106,7 @@ python main.py
 
 ### Step 6 — Aspect Contribution Calculation (Random Forest)
 
-- `code/aspect_contribution_pairs_mining/aspect_contribution_calculation/random_forest.py`
+- `code/aspect_contribution_pairs_mining/aspect_contribution_calculation/model_training.py`
 - Trains a Random Forest regressor per channel (online / offline) to predict overall satisfaction from binary aspect-presence features.
 
 | Argument | Default | Description |
@@ -118,7 +118,7 @@ python main.py
 
 ### Step 7 — Aspect Contribution Calculation (SHAP Analysis)
 
-- `code/aspect_contribution_pairs_mining/aspect_contribution_calculation/shap_analysis.py`
+- `code/aspect_contribution_pairs_mining/aspect_contribution_calculation/aspect_contribution_calculation.py`
 - Computes SHAP values from trained RF models and outputs per-aspect mean SHAP per channel.
 
 | Argument | Default | Description |
