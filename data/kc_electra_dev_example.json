@@ -1,42 +1,20 @@
 [
   {
-    "id": "001",
+    "id": "006",
     "triples": [
       {
-        "sentence": "향 이 너무 좋아요",
-        "target_tags": "B O O O",
-        "opinion_tags": "O O O B",
-        "sentiment": "positive"
-      }
-    ]
-  },
-  {
-    "id": "002",
-    "triples": [
-      {
-        "sentence": "보습력 이 정말 뛰어나요",
-        "target_tags": "B O O O",
-        "opinion_tags": "O O O B",
-        "sentiment": "positive"
-      }
-    ]
-  },
-  {
-    "id": "003",
-    "triples": [
-      {
-        "sentence": "가격 이 너무 비싸요",
-        "target_tags": "B O O O",
-        "opinion_tags": "O O O B",
+        "sentence": "용량 이 작아서 아쉬워요",
+        "target_tags": "B O O O O",
+        "opinion_tags": "O O B O O",
         "sentiment": "negative"
       }
     ]
   },
   {
-    "id": "004",
+    "id": "007",
     "triples": [
       {
-        "sentence": "발림성 이 부드럽고 좋아요",
+        "sentence": "텍스처 가 가볍고 좋아요",
         "target_tags": "B O O O O",
         "opinion_tags": "O O B O O",
         "sentiment": "positive"
@@ -44,12 +22,34 @@
     ]
   },
   {
-    "id": "005",
+    "id": "008",
     "triples": [
       {
-        "sentence": "색상 이 예뻐서 만족해요",
+        "sentence": "패키지 가 예쁘고 고급스러워요",
         "target_tags": "B O O O O",
         "opinion_tags": "O O B O O",
+        "sentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "009",
+    "triples": [
+      {
+        "sentence": "지속력 이 부족해요",
+        "target_tags": "B O O O",
+        "opinion_tags": "O O B O",
+        "sentiment": "negative"
+      }
+    ]
+  },
+  {
+    "id": "010",
+    "triples": [
+      {
+        "sentence": "성분 이 순해서 마음에 들어요",
+        "target_tags": "B O O O O O O",
+        "opinion_tags": "O O B O O O O",
         "sentiment": "positive"
       }
     ]
