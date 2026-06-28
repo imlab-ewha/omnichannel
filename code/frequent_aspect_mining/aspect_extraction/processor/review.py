@@ -67,9 +67,9 @@ def _model_config(device: str) -> types.SimpleNamespace:
 
 
 class ReviewProcessor:
-    def __init__(self, *, device: str = "cpu", batch_size: int = 50, gpu_id: str = "0") -> None:
+    def __init__(self, *, device: str = "cpu", batch_size: int = 50) -> None:
         if device == "cuda":
-            os.environ["CUDA_VISIBLE_DEVICES"] = gpu_id
+            os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
         config = _model_config(device)
 

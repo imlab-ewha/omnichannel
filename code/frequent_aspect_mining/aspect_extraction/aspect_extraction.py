@@ -6,7 +6,7 @@ using a fine-tuned KcELECTRA-based model.
 
 Usage:
     python aspect_extraction.py [--input PATH] [--output PATH]
-                                [--batch-size N] [--gpu-id N]
+                                [--batch-size N]
 
 The input CSV must contain a 'preprocessed_content' column.
 """
@@ -63,12 +63,6 @@ def parse_args() -> argparse.Namespace:
         default=50,
         help="Number of sentences per model forward pass.",
     )
-    parser.add_argument(
-        "--gpu-id",
-        type=str,
-        default="0",
-        help="CUDA device index (CUDA_VISIBLE_DEVICES).",
-    )
     return parser.parse_args()
 
 
@@ -80,7 +74,6 @@ def run(args: argparse.Namespace) -> None:
     processor = ReviewProcessor(
         device="cuda",
         batch_size=args.batch_size,
-        gpu_id=args.gpu_id,
     )
     results = processor.tagging(records)
 

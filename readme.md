@@ -53,7 +53,6 @@ python main.py
 | `--input` | `resource/example_review.csv` | Input review CSV |
 | `--output` | `resource/1_aspect_extraction/` | Output directory |
 | `--batch-size` | `50` | Inference batch size |
-| `--gpu-id` | `0` | CUDA device index |
 
 
 ### Step 2 — Aspect Normalization
