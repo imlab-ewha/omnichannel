@@ -58,7 +58,7 @@ python main_fine-tuning.py --model gru
 
 ### Step 1 — Aspect Extraction
 - `src/aspect_extraction.py`
-- Extracts Aspect-Opinion-Sentiment (AOS) triplets from Korean reviews using a fine-tuned KcELECTRA model.
+- Extracts aspects from Korean reviews using a fine-tuned KcELECTRA model.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -103,7 +103,7 @@ python main_fine-tuning.py --model gru
 
 ### Step 5 — Overall Satisfaction Combination
 - `src/overall_satisfaction_combination.py`
-- Combines star rating and sentiment probability into an overall satisfaction score.
+- Combines rating and positivity probability into an overall satisfaction score.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -138,7 +138,7 @@ python main_fine-tuning.py --model gru
 
 ### Step 8 — Type Determination
 - `src/type_determination.py`
-- Classifies each aspect as **search** (evaluable before purchase) or **experience** (evaluable only after use) via the OpenAI Chat API.
+- Determines each aspect as **search** (evaluable before purchase) or **experience** (evaluable only after use) via the OpenAI Chat API.
 
 | Argument | Default | Description |
 |---|---|---|
@@ -149,7 +149,7 @@ python main_fine-tuning.py --model gru
 | `--seed` | `42` | Random seed |
 
 
-### Step 9 — Scenario Assignment
+### Step 9 — Strategy Scenario Assignment
 - `src/scenario_assignment.py`
 - Assigns an omnichannel strategy scenario (S1–S4) to each aspect.
 
@@ -202,7 +202,7 @@ python main_fine-tuning.py --model kc_electra [--train_data PATH] [--dev_data PA
 
 Output: `checkpoints/kc_electra/model_kc_electra_<timestamp>.pt`
 
----
+--
 
 ### Sentiment Analysis — GRU training (`src/sentiment_analysis.py`)
 
@@ -212,7 +212,6 @@ Output: `checkpoints/kc_electra/model_kc_electra_<timestamp>.pt`
 5\t정말 좋아요
 1\t기대 이하였어요
 ```
-- Ratings 1–3 → negative (0), ratings 4–5 → positive (1).
 - An example file is provided at `data/gru_example.txt` (or pass `--data PATH`).
 
 ```bash
@@ -220,4 +219,3 @@ python main_fine-tuning.py --model gru [--data PATH]
 ```
 
 Output: `checkpoints/gru/sentiment_analysis_model_<timestamp>.h5` and `sentiment_analysis_tokenizer_<timestamp>.pkl`
-
