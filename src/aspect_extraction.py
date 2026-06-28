@@ -56,7 +56,7 @@ _COPULA_RE = re.compile(r"(이에요|이었어요|이었습니다|입니다|이�
 
 
 # ---------------------------------------------------------------------------
-# AOS decoding helpers (from utils/metric.py)
+# AOS decoding helpers
 # ---------------------------------------------------------------------------
 
 def get_spans(tags, length, token_range, span_type, ignore_index=-1):
@@ -113,7 +113,7 @@ def find_triplet(tags, aspect_spans, opinion_spans, token_ranges, probs):
 
 
 # ---------------------------------------------------------------------------
-# Model architecture (from core/model/aos.py)
+# Model architecture
 # ---------------------------------------------------------------------------
 
 class MultiInferBert(torch.nn.Module):
@@ -173,7 +173,7 @@ class MultiInferBert(torch.nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Inference wrapper (from processor/review.py)
+# Inference wrapper
 # ---------------------------------------------------------------------------
 
 @dataclass
