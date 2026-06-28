@@ -44,7 +44,7 @@ python main_inference.py [--input PATH] [--output-dir DIR]
 ```
 - Intermediate outputs saved under `outputs/`; final output: `outputs/scenario_assignment/scenario_assignment.csv`.
 - Sample data: `data/example_review.csv`.
-> Arguments in [brackets] are optional; defaults are shown in the [Scripts](#scripts) section.
+> **Note:** Arguments in [brackets] are optional; defaults are shown in the [Scripts](#scripts) section.
 
 **Fine-tuning** — trains KcELECTRA and/or GRU from your own labeled data:
 ```bash
@@ -203,6 +203,7 @@ python main_fine-tuning.py --model kc_electra [--train_data PATH] [--dev_data PA
 
 Output: `checkpoints/kc_electra/model_kc_electra_<timestamp>.pt`
 
+---
 ### Sentiment Analysis — GRU training (`src/sentiment_analysis.py`)
 
 **Data format** — tab-separated, no header:
