@@ -37,13 +37,14 @@ Download the following files from [imlab-ewha/KcELECTRA-base-v2022-Aspect-Extrac
 
 ## Quick Start
 
-**Inference** — runs all 9 steps end-to-end:
+**Inference** — runs all steps end-to-end:
 ```bash
 cd omnichannel/
 python main_inference.py [--input PATH] [--output-dir DIR]
 ```
 - Intermediate outputs saved under `outputs/`; final output: `outputs/scenario_assignment/scenario_assignment.csv`.
 - Sample data: `data/example_review.csv`.
+> Arguments in [brackets] are optional; defaults are shown in the [Scripts](#scripts) section.
 
 **Fine-tuning** — trains KcELECTRA and/or GRU from your own labeled data:
 ```bash
