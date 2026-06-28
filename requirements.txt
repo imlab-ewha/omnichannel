@@ -1,8 +1,10 @@
 # Common
+numpy>=1.21.0,<2.0.0
 pandas>=1.5.0
 python-dotenv>=1.0.0
+tqdm>=4.0.0
 
-# Aspect extraction
+# Aspect extraction (inference)
 torch>=1.10.0
 transformers>=4.30.0
 kiwipiepy>=0.15.0

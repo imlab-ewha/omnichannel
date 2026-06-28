@@ -1,0 +1,57 @@
+[
+  {
+    "id": "001",
+    "triples": [
+      {
+        "sentence": "향 이 너무 좋아요",
+        "target_tags": "B O O O",
+        "opinion_tags": "O O O B",
+        "sentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "002",
+    "triples": [
+      {
+        "sentence": "보습력 이 정말 뛰어나요",
+        "target_tags": "B O O O",
+        "opinion_tags": "O O O B",
+        "sentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "003",
+    "triples": [
+      {
+        "sentence": "가격 이 너무 비싸요",
+        "target_tags": "B O O O",
+        "opinion_tags": "O O O B",
+        "sentiment": "negative"
+      }
+    ]
+  },
+  {
+    "id": "004",
+    "triples": [
+      {
+        "sentence": "발림성 이 부드럽고 좋아요",
+        "target_tags": "B O O O O",
+        "opinion_tags": "O O B O O",
+        "sentiment": "positive"
+      }
+    ]
+  },
+  {
+    "id": "005",
+    "triples": [
+      {
+        "sentence": "색상 이 예뻐서 만족해요",
+        "target_tags": "B O O O O",
+        "opinion_tags": "O O B O O",
+        "sentiment": "positive"
+      }
+    ]
+  }
+]

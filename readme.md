@@ -28,22 +28,31 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 **4. Download model weights**
 
-Download `aspect_extraction_model.pt` from [imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction](https://huggingface.co/imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction) and place it at:
-```
-checkpoints/kc_electra/aspect_extraction_model.pt
-```
+Download the following files from [imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction](https://huggingface.co/imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction) and place them in `checkpoints/kc_electra/`:
+
+| File | Required for |
+|---|---|
+| `aspect_extraction_model.pt` | Inference (Steps 1–9) |
+| `pytorch_model.bin` | Fine-tuning (`main_fine-tuning.py --model kc_electra`) |
 
 ## Quick Start
-- `main.py` runs all steps end-to-end in order.
-- Intermediate outputs are saved under `outputs/`, no arguments needed for a basic run.
-- Final output: `outputs/scenario_assignment/scenario_assignment.csv`.
-- If a step fails, the pipeline stops immediately and prints which step failed.
-- A sample Korean review dataset for inference testing is provided at `data/example_review.csv`.
 
+**Inference** — runs all 9 steps end-to-end:
 ```bash
 cd omnichannel/
-python main.py
+python main_inference.py [--input PATH] [--output-dir DIR]
 ```
+- Intermediate outputs saved under `outputs/`; final output: `outputs/scenario_assignment/scenario_assignment.csv`.
+- Sample data: `data/example_review.csv`.
+
+**Fine-tuning** — trains KcELECTRA and/or GRU from your own labeled data:
+```bash
+python main_fine-tuning.py --model all         # trains both models
+python main_fine-tuning.py --model kc_electra
+python main_fine-tuning.py --model gru
+```
+- Sample data: `data/kc_electra_train_example.json`, `data/gru_example.txt`.
+- Trained weights saved to `checkpoints/` with timestamp suffix.
 
 ## Scripts
 
@@ -157,3 +166,58 @@ python main.py
 | `--types` | `outputs/type_determination/aspect_types.csv` | Aspect type results |
 | `--output-dir` | `outputs/scenario_assignment/` | Output directory |
 | `--epsilon` | `0.0` | Min \|online − offline\| SHAP difference to assign a scenario |
+
+
+## Training
+
+Pre-trained model weights are provided in `checkpoints/`. The scripts below are for re-training or fine-tuning from scratch. Trained outputs are saved to `checkpoints/` with a timestamp suffix to avoid overwriting existing weights.
+
+### Aspect Extraction — KcELECTRA fine-tuning (`src/aspect_extraction.py`)
+
+> **Prerequisite:** `checkpoints/kc_electra/pytorch_model.bin` must be present (download from [imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction](https://huggingface.co/imlab-ewha/KcELECTRA-base-v2022-Aspect-Extraction)).
+
+**Data format** — JSON list of sentence packs:
+```json
+[
+  {
+    "id": "sample_001",
+    "triples": [
+      {
+        "sentence": "향도 좋고 보습력이 뛰어나요",
+        "target_tags": "B O O O O",
+        "opinion_tags": "O O B O O",
+        "sentiment": "positive"
+      }
+    ]
+  }
+]
+```
+- `target_tags` / `opinion_tags`: BIO-style tags, space-separated, aligned to whitespace-tokenized words.
+- `sentiment`: `"positive"` or `"negative"`.
+- An example file is provided at `data/kc_electra_train_example.json` (and `_dev_`).
+
+```bash
+python main_fine-tuning.py --model kc_electra [--train_data PATH] [--dev_data PATH] [--kc_epochs 25] [--kc_device cuda]
+```
+
+Output: `checkpoints/kc_electra/model_kc_electra_<timestamp>.pt`
+
+---
+
+### Sentiment Analysis — GRU training (`src/sentiment_analysis.py`)
+
+**Data format** — tab-separated, no header:
+```
+<rating>\t<review text>
+5\t정말 좋아요
+1\t기대 이하였어요
+```
+- Ratings 1–3 → negative (0), ratings 4–5 → positive (1).
+- An example file is provided at `data/gru_example.txt` (or pass `--data PATH`).
+
+```bash
+python main_fine-tuning.py --model gru [--data PATH]
+```
+
+Output: `checkpoints/gru/sentiment_analysis_model_<timestamp>.h5` and `sentiment_analysis_tokenizer_<timestamp>.pkl`
+
